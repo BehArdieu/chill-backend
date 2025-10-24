@@ -1,0 +1,223 @@
+// 🎨 Chill Database Schema - Prisma
+// Base de données pour l'application Chill
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 📱 Users Table
+model User {
+  id          String   @id @default(uuid())
+  email       String   @unique
+  username    String   @unique
+  first_name  String
+  last_name   String
+  password    String
+  avatar_url  String?
+  bio         String?
+  location    String?  // PostGIS geometry as string
+  birth_date  DateTime?
+  interests   String[]
+  is_verified Boolean @default(false)
+  is_active   Boolean  @default(true)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  // Relations
+  created_communities Community[] @relation("CommunityCreator")
+  created_events      Event[]     @relation("EventCreator")
+  posts               Post[]
+  messages_sent       Message[]   @relation("MessageSender")
+  messages_received   Message[]   @relation("MessageReceiver")
+  notifications       Notification[]
+  reactions           Reaction[]
+  
+  // Community memberships
+  community_memberships CommunityMember[]
+  
+  // Event participations
+  event_participations EventParticipant[]
+
+  @@map("users")
+}
+
+// 🏘️ Communities Table
+model Community {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  category    String
+  avatar_url  String?
+  cover_url   String?
+  location    String?  // PostGIS geometry as string
+  is_public   Boolean  @default(true)
+  is_active   Boolean  @default(true)
+  created_by  String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  // Relations
+  created_by_user User              @relation("CommunityCreator", fields: [created_by], references: [id])
+  members          CommunityMember[]
+  events           Event[]
+  posts            Post[]
+
+  @@map("communities")
+}
+
+// 👥 Community Members
+model CommunityMember {
+  id           String   @id @default(uuid())
+  community_id String
+  user_id      String
+  role         String   @default("member") // member, admin, moderator
+  joined_at    DateTime @default(now())
+
+  // Relations
+  community Community @relation(fields: [community_id], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([community_id, user_id])
+  @@map("community_members")
+}
+
+// 📅 Events Table
+model Event {
+  id               String    @id @default(uuid())
+  title            String
+  description      String?
+  category         String
+  start_date       DateTime
+  end_date         DateTime?
+  location         String?   // PostGIS geometry as string
+  address          String?
+  max_participants Int?
+  is_public        Boolean   @default(true)
+  is_active        Boolean   @default(true)
+  created_by       String
+  community_id     String?
+  created_at       DateTime  @default(now())
+  updated_at       DateTime  @updatedAt
+
+  // Relations
+  created_by_user Community @relation("EventCreator", fields: [created_by], references: [id])
+  community       Community? @relation(fields: [community_id], references: [id])
+  participants    EventParticipant[]
+  posts           Post[]
+
+  @@map("events")
+}
+
+// 🎫 Event Participants
+model EventParticipant {
+  id       String @id @default(uuid())
+  event_id String
+  user_id  String
+  status   String @default("going") // going, maybe, not_going
+  joined_at DateTime @default(now())
+
+  // Relations
+  event Event @relation(fields: [event_id], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([event_id, user_id])
+  @@map("event_participants")
+}
+
+// 📝 Posts Table
+model Post {
+  id           String   @id @default(uuid())
+  content      String
+  media_urls   String[] // Array of URLs
+  author_id    String
+  community_id String?
+  event_id     String?
+  is_public    Boolean  @default(true)
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+
+  // Relations
+  author    User      @relation(fields: [author_id], references: [id])
+  community Community? @relation(fields: [community_id], references: [id])
+  event     Event?    @relation(fields: [event_id], references: [id])
+  reactions Reaction[]
+
+  @@map("posts")
+}
+
+// 💬 Messages Table
+model Message {
+  id           String   @id @default(uuid())
+  content      String
+  sender_id    String
+  receiver_id  String?
+  community_id String?
+  event_id     String?
+  is_read      Boolean  @default(false)
+  created_at   DateTime @default(now())
+
+  // Relations
+  sender   User       @relation("MessageSender", fields: [sender_id], references: [id])
+  receiver User?      @relation("MessageReceiver", fields: [receiver_id], references: [id])
+  community Community? @relation(fields: [community_id], references: [id])
+  event    Event?     @relation(fields: [event_id], references: [id])
+
+  @@map("messages")
+}
+
+// 🔔 Notifications Table
+model Notification {
+  id      String  @id @default(uuid())
+  user_id String
+  type    String  // event_invite, community_join, message, etc.
+  title   String
+  content String?
+  data    Json?   // Additional data
+  is_read Boolean @default(false)
+  created_at DateTime @default(now())
+
+  // Relations
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+}
+
+// ❤️ Reactions Table
+model Reaction {
+  id      String @id @default(uuid())
+  user_id String
+  post_id String
+  type    String @default("like") // like, love, laugh, etc.
+  created_at DateTime @default(now())
+
+  // Relations
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, post_id])
+  @@map("reactions")
+}
+
+// 📸 Media Table
+model Media {
+  id       String   @id @default(uuid())
+  url      String
+  type     String   // image, video, audio
+  size     Int?     // Size in bytes
+  user_id  String
+  post_id  String?
+  event_id String?
+  created_at DateTime @default(now())
+
+  // Relations
+  user  User  @relation(fields: [user_id], references: [id])
+  post  Post? @relation(fields: [post_id], references: [id])
+  event Event? @relation(fields: [event_id], references: [id])
+
+  @@map("media")
+}
