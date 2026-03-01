@@ -5,97 +5,16 @@ export declare class CommunitiesController {
     constructor(communitiesService: CommunitiesService);
     findAll(category?: string, search?: string, limit?: string, offset?: string): Promise<{
         success: boolean;
-        data: {
-            description: string;
-            avatar_url: string;
-            id: string;
-            is_active: boolean;
-            created_at: Date;
-            updated_at: Date;
-            _count: {
-                members: number;
-            };
-            name: string;
-            category: string;
-            cover_url: string;
-            is_public: boolean;
-            created_by: string;
-            created_by_user: {
-                first_name: string;
-                last_name: string;
-                avatar_url: string;
-                id: string;
-                username: string;
-            };
-        }[];
+        data: any;
     }>;
     findOne(id: string): Promise<{
         success: boolean;
-        data: {
-            description: string;
-            avatar_url: string;
-            id: string;
-            is_active: boolean;
-            created_at: Date;
-            updated_at: Date;
-            _count: {
-                members: number;
-            };
-            name: string;
-            category: string;
-            cover_url: string;
-            is_public: boolean;
-            created_by: string;
-            created_by_user: {
-                first_name: string;
-                last_name: string;
-                avatar_url: string;
-                id: string;
-                username: string;
-            };
-            members: ({
-                user: {
-                    first_name: string;
-                    last_name: string;
-                    avatar_url: string;
-                    id: string;
-                    username: string;
-                };
-            } & {
-                id: string;
-                community_id: string;
-                joined_at: Date;
-                user_id: string;
-                role: string;
-            })[];
-        };
+        data: any;
     }>;
     create(createCommunityDto: CreateCommunityDto, req: any): Promise<{
         success: boolean;
         message: string;
-        data: {
-            description: string;
-            avatar_url: string;
-            id: string;
-            is_active: boolean;
-            created_at: Date;
-            updated_at: Date;
-            _count: {
-                members: number;
-            };
-            name: string;
-            category: string;
-            cover_url: string;
-            is_public: boolean;
-            created_by: string;
-            created_by_user: {
-                first_name: string;
-                last_name: string;
-                avatar_url: string;
-                id: string;
-                username: string;
-            };
-        };
+        data: any;
     }>;
     join(id: string, req: any): Promise<{
         success: boolean;
@@ -107,21 +26,6 @@ export declare class CommunitiesController {
     }>;
     getMembers(id: string, limit?: string, offset?: string): Promise<{
         success: boolean;
-        data: ({
-            user: {
-                first_name: string;
-                last_name: string;
-                bio: string;
-                avatar_url: string;
-                id: string;
-                username: string;
-            };
-        } & {
-            id: string;
-            community_id: string;
-            joined_at: Date;
-            user_id: string;
-            role: string;
-        })[];
+        data: any;
     }>;
 }

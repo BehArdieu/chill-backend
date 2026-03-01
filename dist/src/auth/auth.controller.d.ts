@@ -8,15 +8,7 @@ export declare class AuthController {
         success: boolean;
         message: string;
         data: {
-            user: {
-                first_name: string;
-                last_name: string;
-                interests: string[];
-                id: string;
-                email: string;
-                username: string;
-                created_at: Date;
-            };
+            user: any;
             token: string;
         };
     }>;
@@ -24,28 +16,13 @@ export declare class AuthController {
         success: boolean;
         message: string;
         data: {
-            user: {
-                first_name: string;
-                last_name: string;
-                interests: string[];
-                id: string;
-                email: string;
-                username: string;
-                is_active: boolean;
-            };
+            user: any;
             token: string;
         };
     }>;
     getProfile(req: any): Promise<{
         success: boolean;
-        data: {
-            first_name: string;
-            last_name: string;
-            id: string;
-            email: string;
-            username: string;
-            is_active: boolean;
-        };
+        data: any;
     }>;
     refresh(req: any): Promise<{
         success: boolean;

@@ -9,36 +9,13 @@ export declare class AuthService {
     private usersService;
     constructor(prisma: PrismaService, jwtService: JwtService, usersService: UsersService);
     register(registerDto: RegisterDto): Promise<{
-        user: {
-            first_name: string;
-            last_name: string;
-            interests: string[];
-            id: string;
-            email: string;
-            username: string;
-            created_at: Date;
-        };
+        user: any;
         token: string;
     }>;
     login(loginDto: LoginDto): Promise<{
-        user: {
-            first_name: string;
-            last_name: string;
-            interests: string[];
-            id: string;
-            email: string;
-            username: string;
-            is_active: boolean;
-        };
+        user: any;
         token: string;
     }>;
-    validateUser(userId: string): Promise<{
-        first_name: string;
-        last_name: string;
-        id: string;
-        email: string;
-        username: string;
-        is_active: boolean;
-    }>;
+    validateUser(userId: string): Promise<any>;
     generateToken(user: any): string;
 }
