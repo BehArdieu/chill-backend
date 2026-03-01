@@ -87,13 +87,24 @@ export class UsersService {
   async getUserCommunities(userId: string) {
     const communities = await this.prisma.community.findMany({
       where: {
-        community_members: {
+        members: {
           some: { user_id: userId },
         },
       },
-      include: {
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        category: true,
+        avatar_url: true,
+        cover_url: true,
+        is_public: true,
+        is_active: true,
+        created_by: true,
+        created_at: true,
+        updated_at: true,
         _count: {
-          select: { community_members: true },
+          select: { members: true },
         },
       },
     });
@@ -103,13 +114,13 @@ export class UsersService {
 
   async getUserEvents(userId: string, status?: string) {
     const where: any = {
-      event_participants: {
+      participants: {
         some: { user_id: userId },
       },
     };
 
     if (status) {
-      where.event_participants.some.status = status;
+      where.participants.some.status = status;
     }
 
     const events = await this.prisma.event.findMany({
@@ -123,7 +134,7 @@ export class UsersService {
           },
         },
         _count: {
-          select: { event_participants: true },
+          select: { participants: true },
         },
       },
       orderBy: { start_date: 'desc' },

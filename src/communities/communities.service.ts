@@ -25,9 +25,20 @@ export class CommunitiesService {
 
     const communities = await this.prisma.community.findMany({
       where,
-      include: {
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        category: true,
+        avatar_url: true,
+        cover_url: true,
+        is_public: true,
+        is_active: true,
+        created_by: true,
+        created_at: true,
+        updated_at: true,
         _count: {
-          select: { community_members: true },
+          select: { members: true },
         },
         created_by_user: {
           select: {
@@ -50,9 +61,20 @@ export class CommunitiesService {
   async findOne(id: string) {
     const community = await this.prisma.community.findUnique({
       where: { id },
-      include: {
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        category: true,
+        avatar_url: true,
+        cover_url: true,
+        is_public: true,
+        is_active: true,
+        created_by: true,
+        created_at: true,
+        updated_at: true,
         _count: {
-          select: { community_members: true },
+          select: { members: true },
         },
         created_by_user: {
           select: {
@@ -63,7 +85,7 @@ export class CommunitiesService {
             avatar_url: true,
           },
         },
-        community_members: {
+        members: {
           include: {
             user: {
               select: {
@@ -101,9 +123,20 @@ export class CommunitiesService {
         is_public,
         created_by: userId,
       },
-      include: {
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        category: true,
+        avatar_url: true,
+        cover_url: true,
+        is_public: true,
+        is_active: true,
+        created_by: true,
+        created_at: true,
+        updated_at: true,
         _count: {
-          select: { community_members: true },
+          select: { members: true },
         },
         created_by_user: {
           select: {
@@ -133,6 +166,7 @@ export class CommunitiesService {
     // Check if community exists
     const community = await this.prisma.community.findUnique({
       where: { id },
+      select: { id: true },
     });
 
     if (!community) {

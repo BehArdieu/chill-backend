@@ -36,6 +36,7 @@ model User {
   messages_received   Message[]   @relation("MessageReceiver")
   notifications       Notification[]
   reactions           Reaction[]
+  media               Media[]
   
   // Community memberships
   community_memberships CommunityMember[]
@@ -66,6 +67,7 @@ model Community {
   members          CommunityMember[]
   events           Event[]
   posts            Post[]
+  messages         Message[]
 
   @@map("communities")
 }
@@ -105,10 +107,12 @@ model Event {
   updated_at       DateTime  @updatedAt
 
   // Relations
-  created_by_user Community @relation("EventCreator", fields: [created_by], references: [id])
-  community       Community? @relation(fields: [community_id], references: [id])
+  created_by_user User              @relation("EventCreator", fields: [created_by], references: [id])
+  community       Community?        @relation(fields: [community_id], references: [id])
   participants    EventParticipant[]
   posts           Post[]
+  messages        Message[]
+  media           Media[]
 
   @@map("events")
 }
@@ -146,6 +150,7 @@ model Post {
   community Community? @relation(fields: [community_id], references: [id])
   event     Event?    @relation(fields: [event_id], references: [id])
   reactions Reaction[]
+  media     Media[]
 
   @@map("posts")
 }

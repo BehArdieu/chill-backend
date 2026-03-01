@@ -45,7 +45,21 @@ export class EventsService {
 
     const events = await this.prisma.event.findMany({
       where,
-      include: {
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        category: true,
+        start_date: true,
+        end_date: true,
+        address: true,
+        max_participants: true,
+        is_public: true,
+        is_active: true,
+        created_by: true,
+        community_id: true,
+        created_at: true,
+        updated_at: true,
         community: {
           select: {
             id: true,
@@ -63,7 +77,7 @@ export class EventsService {
           },
         },
         _count: {
-          select: { event_participants: true },
+          select: { participants: true },
         },
       },
       take: limit,
@@ -77,7 +91,21 @@ export class EventsService {
   async findOne(id: string) {
     const event = await this.prisma.event.findUnique({
       where: { id },
-      include: {
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        category: true,
+        start_date: true,
+        end_date: true,
+        address: true,
+        max_participants: true,
+        is_public: true,
+        is_active: true,
+        created_by: true,
+        community_id: true,
+        created_at: true,
+        updated_at: true,
         community: {
           select: {
             id: true,
@@ -95,9 +123,9 @@ export class EventsService {
           },
         },
         _count: {
-          select: { event_participants: true },
+          select: { participants: true },
         },
-        event_participants: {
+        participants: {
           include: {
             user: {
               select: {
@@ -148,7 +176,21 @@ export class EventsService {
         created_by: userId,
         community_id,
       },
-      include: {
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        category: true,
+        start_date: true,
+        end_date: true,
+        address: true,
+        max_participants: true,
+        is_public: true,
+        is_active: true,
+        created_by: true,
+        community_id: true,
+        created_at: true,
+        updated_at: true,
         community: {
           select: {
             id: true,
@@ -166,7 +208,7 @@ export class EventsService {
           },
         },
         _count: {
-          select: { event_participants: true },
+          select: { participants: true },
         },
       },
     });
