@@ -4,6 +4,10 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
+  // ✅ port déclaré en premier
+  const port = process.env.PORT || 3000;
+  const isProd = process.env.NODE_ENV === 'production';
+
   const app = await NestFactory.create(AppModule);
 
   // 🛡️ Global validation pipe
@@ -13,8 +17,7 @@ async function bootstrap() {
     transform: true,
   }));
 
-  // 🌐 CORS — ouvert pour React Native (pas d'origine navigateur)
-  const isProd = process.env.NODE_ENV === 'production';
+  // 🌐 CORS
   app.enableCors({
     origin: isProd ? true : (process.env.CORS_ORIGIN || 'http://localhost:19000'),
     credentials: true,
@@ -42,7 +45,6 @@ async function bootstrap() {
   }
 
   // 🚀 Start server
-  const port = process.env.PORT || 3000;
   await app.listen(port);
 
   console.log(`🎨 Chill Backend API running on port ${port}`);
