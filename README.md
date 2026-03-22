@@ -124,10 +124,12 @@ npm run test:cov        # Couverture de tests
 ## 📚 Documentation API
 
 ### Swagger UI
-Une fois le serveur démarré, accédez à la documentation interactive :
+Une fois le serveur démarré en local, accédez à la documentation interactive :
 ```
 http://localhost:3000/api/docs
 ```
+
+**Production (Railway)** : [https://chill-backend-production.up.railway.app/api/docs](https://chill-backend-production.up.railway.app/api/docs)
 
 ### Authentification
 ```bash
