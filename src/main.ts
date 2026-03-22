@@ -37,6 +37,7 @@ async function bootstrap() {
       .addTag('posts', 'Publications')
       .addTag('messages', 'Messages')
       .addTag('notifications', 'Notifications')
+      .addTag('health', 'Santé')
       .build();
 
     const document = SwaggerModule.createDocument(app, config);
