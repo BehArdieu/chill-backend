@@ -1,6 +1,6 @@
 # 🎨 Chill Backend API - NestJS
 
-## 📱 Vue d'ensemble
+## 📱 Vue d'ensemble du projet
 Backend API moderne pour l'application Chill - Connectez-vous autour de vos passions.
 
 ## 🚀 Stack Technologique
