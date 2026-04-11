@@ -2,10 +2,8 @@
 // Base de données pour l'application Chill
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = []
-  engineType      = "binary"
-  binaryTargets   = ["native", "linux-musl-openssl-3.0.x"]
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
 datasource db {
