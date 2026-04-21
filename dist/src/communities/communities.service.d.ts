@@ -4,8 +4,8 @@ export declare class CommunitiesService {
     private prisma;
     constructor(prisma: PrismaService);
     findAll(category?: string, limit?: number, offset?: number, search?: string): Promise<{
-        name: string;
         description: string;
+        name: string;
         avatar_url: string;
         id: string;
         is_active: boolean;
@@ -27,8 +27,8 @@ export declare class CommunitiesService {
         };
     }[]>;
     findOne(id: string): Promise<{
-        name: string;
         description: string;
+        name: string;
         avatar_url: string;
         id: string;
         is_active: boolean;
@@ -65,8 +65,8 @@ export declare class CommunitiesService {
         })[];
     }>;
     create(createCommunityDto: CreateCommunityDto, userId: string): Promise<{
-        name: string;
         description: string;
+        name: string;
         avatar_url: string;
         id: string;
         is_active: boolean;

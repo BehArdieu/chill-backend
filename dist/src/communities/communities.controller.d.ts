@@ -6,8 +6,8 @@ export declare class CommunitiesController {
     findAll(category?: string, search?: string, limit?: string, offset?: string): Promise<{
         success: boolean;
         data: {
-            name: string;
             description: string;
+            name: string;
             avatar_url: string;
             id: string;
             is_active: boolean;
@@ -32,8 +32,8 @@ export declare class CommunitiesController {
     findOne(id: string): Promise<{
         success: boolean;
         data: {
-            name: string;
             description: string;
+            name: string;
             avatar_url: string;
             id: string;
             is_active: boolean;
@@ -74,8 +74,8 @@ export declare class CommunitiesController {
         success: boolean;
         message: string;
         data: {
-            name: string;
             description: string;
+            name: string;
             avatar_url: string;
             id: string;
             is_active: boolean;

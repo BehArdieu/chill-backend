@@ -4,12 +4,12 @@ export declare class EventsService {
     private prisma;
     constructor(prisma: PrismaService);
     findAll(category?: string, community_id?: string, start_date?: string, end_date?: string, limit?: number, offset?: number, search?: string): Promise<{
+        description: string;
         community: {
             name: string;
             avatar_url: string;
             id: string;
         };
-        description: string;
         title: string;
         id: string;
         is_active: boolean;
@@ -35,12 +35,12 @@ export declare class EventsService {
         community_id: string;
     }[]>;
     findOne(id: string): Promise<{
+        description: string;
         community: {
             name: string;
             avatar_url: string;
             id: string;
         };
-        description: string;
         title: string;
         id: string;
         is_active: boolean;
@@ -81,12 +81,12 @@ export declare class EventsService {
         })[];
     }>;
     create(createEventDto: CreateEventDto, userId: string): Promise<{
+        description: string;
         community: {
             name: string;
             avatar_url: string;
             id: string;
         };
-        description: string;
         title: string;
         id: string;
         is_active: boolean;

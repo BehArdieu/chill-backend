@@ -6,12 +6,12 @@ export declare class EventsController {
     findAll(category?: string, community_id?: string, start_date?: string, end_date?: string, search?: string, limit?: string, offset?: string): Promise<{
         success: boolean;
         data: {
+            description: string;
             community: {
                 name: string;
                 avatar_url: string;
                 id: string;
             };
-            description: string;
             title: string;
             id: string;
             is_active: boolean;
@@ -40,12 +40,12 @@ export declare class EventsController {
     findOne(id: string): Promise<{
         success: boolean;
         data: {
+            description: string;
             community: {
                 name: string;
                 avatar_url: string;
                 id: string;
             };
-            description: string;
             title: string;
             id: string;
             is_active: boolean;
@@ -90,12 +90,12 @@ export declare class EventsController {
         success: boolean;
         message: string;
         data: {
+            description: string;
             community: {
                 name: string;
                 avatar_url: string;
                 id: string;
             };
-            description: string;
             title: string;
             id: string;
             is_active: boolean;

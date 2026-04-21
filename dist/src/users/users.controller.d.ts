@@ -51,8 +51,8 @@ export declare class UsersController {
     getUserCommunities(id: string): Promise<{
         success: boolean;
         data: {
-            name: string;
             description: string;
+            name: string;
             avatar_url: string;
             id: string;
             is_active: boolean;

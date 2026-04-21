@@ -34,8 +34,8 @@ export declare class UsersService {
         username: string;
     }[]>;
     getUserCommunities(userId: string): Promise<{
-        name: string;
         description: string;
+        name: string;
         avatar_url: string;
         id: string;
         is_active: boolean;
